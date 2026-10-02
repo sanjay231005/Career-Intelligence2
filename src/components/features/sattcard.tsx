@@ -1,36 +1,30 @@
-import { ReactNode } from "react";
 import { LucideIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
 
-interface SectionCardProps {
+interface StatCardProps {
   icon: LucideIcon;
-  title: string;
-  children: ReactNode;
-  className?: string;
-  count?: number;
+  label: string;
+  value: string | number;
+  accent?: boolean;
 }
 
-export default function SectionCard({
-  icon: Icon,
-  title,
-  children,
-  className,
-  count,
-}: SectionCardProps) {
+export default function StatCard({ icon: Icon, label, value, accent }: StatCardProps) {
   return (
-    <section className={cn("rounded-2xl border border-border bg-card p-5 sm:p-6", className)}>
-      <div className="mb-4 flex items-center gap-2.5">
-        <div className="grid h-8 w-8 place-items-center rounded-lg bg-primary/10 text-primary">
-          <Icon className="h-4 w-4" />
+    <div className="rounded-2xl border border-border bg-card p-4 sm:p-5">
+      <div className="flex items-center gap-3">
+        <div
+          className={
+            accent
+              ? "grid h-10 w-10 place-items-center rounded-xl bg-accent/15 text-accent-foreground"
+              : "grid h-10 w-10 place-items-center rounded-xl bg-primary/10 text-primary"
+          }
+        >
+          <Icon className="h-5 w-5" />
         </div>
-        <h2 className="font-display text-lg font-600">{title}</h2>
-        {typeof count === "number" && (
-          <span className="ml-1 rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
-            {count}
-          </span>
-        )}
+        <div className="leading-tight">
+          <p className="font-display text-2xl font-700 tabular-nums">{value}</p>
+          <p className="text-xs text-muted-foreground">{label}</p>
+        </div>
       </div>
-      {children}
-    </section>
+    </div>
   );
 }
